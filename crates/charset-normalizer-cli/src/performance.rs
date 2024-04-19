@@ -13,6 +13,27 @@ use std::io::Read;
 use std::process;
 use std::time::{Duration, Instant};
 
+/////////////////////////////////////////////////////////////////////////////////////
+// Performance binary application
+/////////////////////////////////////////////////////////////////////////////////////
+
+#[derive(Parser, Debug)]
+#[command(name = "Performance check for charset-normalizer-rs vs chardet vs chardetng")]
+#[command(author, version, about, long_about = None)]
+pub(crate) struct PerformanceArgs {
+    /// Apply artificial size increase to challenge the detection mechanism further
+    #[arg(short, long, default_value_t = 1)]
+    pub size_increase: u8,
+}
+
+// Struct to save result of each test in performance app
+pub(crate) struct PerformanceResult {
+    /// Performance test duration
+    pub duration: Duration,
+    /// Is result accurate?
+    pub correct: bool,
+}
+
 // Check result
 fn check_result(
     correct_encodings: &Vec<String>,

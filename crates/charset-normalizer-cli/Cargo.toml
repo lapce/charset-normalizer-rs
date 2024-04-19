@@ -1,0 +1,52 @@
+[package]
+name = "charset-normalizer-cli"
+version = "1.0.6"
+authors = ["Nikolay Yarovoy <nikolay.yarovoy@gmail.com>"]
+edition = "2021"
+description = "Truly universal encoding detector in pure Rust - port of Python version"
+license-file = "LICENSE"
+documentation = "https://docs.rs/charset-normalizer-cli"
+readme = "README.md"
+repository = "https://github.com/nickspring/charset-normalizer-rs"
+keywords = ["encoding", "charset", "detector", "conversion", "normalizer"]
+categories = ["encoding", "internationalization", "localization"]
+exclude = [
+  "/src/tests/data/**",
+  "/CONTRIBUTING.md",
+  "/CODE_OF_CONDUCT.md",
+  "/.github/**",
+  ".gitattributes",
+]
+
+[dev-dependencies]
+assert_cmd = { version = "2.0.12" }
+criterion  = { version = "0.3" }
+predicates = { version = "3.0.3" }
+
+[dependencies]
+charset-normalizer-rs = { path = "../charset-normalizer" }
+
+chardet    = { version = "0.2.4", optional = true }
+chardetng  = { version = "0.1.17", optional = true }
+clap       = { version = "4.4.2", features = ["derive"] }
+dialoguer  = { version = "0.10.4" }
+env_logger = { version = "0.10.0" }
+
+encoding      = { workspace = true }
+log           = { workspace = true }
+ordered-float = { workspace = true }
+serde         = { workspace = true, features = ["derive"] }
+serde_json    = { workspace = true }
+
+[features]
+performance = ["chardet", "chardetng"]
+
+[[bin]]
+name              = "performance"
+path              = "src/performance.rs"
+required-features = ["performance"]
+
+[[bin]]
+name              = "normalizer"
+path              = "src/normalizer.rs"
+required-features = []
